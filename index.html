@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMERA — Plateforme de Gestion Clinique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #38bdf8;
+            --accent2: #818cf8;
+            --accent3: #34d399;
+            --accent4: #f472b6;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --bg-dark: #0b0f19;
+            --bg-card: #111827;
+            --border: rgba(148,163,184,0.1);
+            --gradient-1: linear-gradient(135deg, #38bdf8, #818cf8);
+            --gradient-2: linear-gradient(135deg, #34d399, #38bdf8);
+            --gradient-3: linear-gradient(135deg, #f472b6, #818cf8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(11,15,25,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-text-fill-color: white;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -6px; left: 0;
+            width: 0; height: 2px; background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 20px rgba(56,189,248,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(56,189,248,0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            background: rgba(56,189,248,0.05);
+        }
+        .btn-large { padding: 1rem 2.5rem; font-size: 1rem; }
+
+        .mobile-menu { display: none; cursor: pointer; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(56,189,248,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(129,140,248,0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 80%, rgba(52,211,153,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(56,189,248,0.1);
+            border: 1px solid rgba(56,189,248,0.2);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .hero h1 span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-mockup {
+            width: 100%;
+            max-width: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+            position: relative;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+        .dashboard-mockup:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+        .mockup-header {
+            height: 40px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            gap: 0.5rem;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #f87171; }
+        .dot-yellow { background: #fbbf24; }
+        .dot-green { background: #34d399; }
+        .mockup-body { padding: 1.5rem; }
+        .mockup-row {
+            display: flex; gap: 1rem; margin-bottom: 1rem;
+        }
+        .mockup-card {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .mockup-card .val {
+            font-size: 1.5rem; font-weight: 700; color: var(--text);
+        }
+        .mockup-card .lbl {
+            font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .mockup-card.accent { border-left: 3px solid var(--accent); }
+        .mockup-card.accent2 { border-left: 3px solid var(--accent2); }
+        .mockup-card.accent3 { border-left: 3px solid var(--accent3); }
+        .mockup-card.accent4 { border-left: 3px solid var(--accent4); }
+
+        .mockup-chart {
+            height: 120px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+        .bar {
+            flex: 1;
+            background: var(--gradient-1);
+            border-radius: 4px 4px 0 0;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .bar:hover { opacity: 1; }
+        .bar:nth-child(2) { height: 60%; background: var(--gradient-2); }
+        .bar:nth-child(3) { height: 85%; }
+        .bar:nth-child(4) { height: 45%; background: var(--gradient-3); }
+        .bar:nth-child(5) { height: 70%; background: var(--gradient-2); }
+        .bar:nth-child(6) { height: 55%; }
+        .bar:nth-child(7) { height: 90%; background: var(--gradient-3); }
+        .bar:nth-child(8) { height: 65%; background: var(--gradient-2); }
+
+        .floating-card {
+            position: absolute;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-card-1 { top: -20px; right: -20px; animation-delay: 0s; }
+        .floating-card-2 { bottom: 40px; left: -30px; animation-delay: 2s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: rgba(255,255,255,0.02);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 5%;
+        }
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-item h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+        .stat-item p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Section Layouts */
+        section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .section-label {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(56,189,248,0.1);
+            border: 1px solid rgba(56,189,248,0.2);
+            border-radius: 100px;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: var(--gradient-1); opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56,189,248,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-card:nth-child(2)::before { background: var(--gradient-2); }
+        .feature-card:nth-child(3)::before { background: var(--gradient-3); }
+        .feature-card:nth-child(4)::before { background: var(--gradient-2); }
+        .feature-card:nth-child(5)::before { background: var(--gradient-1); }
+        .feature-card:nth-child(6)::before { background: var(--gradient-3); }
+
+        .feature-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(56,189,248,0.1);
+            border: 1px solid rgba(56,189,248,0.2);
+        }
+        .feature-card:nth-child(2) .feature-icon { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.2); }
+        .feature-card:nth-child(3) .feature-icon { background: rgba(244,114,182,0.1); border-color: rgba(244,114,182,0.2); }
+        .feature-card:nth-child(4) .feature-icon { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.2); }
+        .feature-card:nth-child(5) .feature-icon { background: rgba(129,140,248,0.1); border-color: rgba(129,140,248,0.2); }
+        .feature-card:nth-child(6) .feature-icon { background: rgba(244,114,182,0.1); border-color: rgba(244,114,182,0.2); }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .feature-card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .feature-card ul li {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .feature-card ul li::before {
+            content: '✓'; position: absolute; left: 0;
+            color: var(--accent3); font-weight: 700;
+        }
+
+        /* Modules Section */
+        .modules-section {
+            background: rgba(255,255,255,0.02);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .modules-section > div { max-width: 1200px; margin: 0 auto; }
+        .modules-tabs {
+            display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .tab-btn:hover { color: var(--text); border-color: var(--accent); }
+        .tab-btn.active {
+            background: rgba(56,189,248,0.1);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .module-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .module-detail h3 { font-size: 1.8rem; margin-bottom: 1rem; }
+        .module-detail p { color: var(--text-muted); margin-bottom: 1.5rem; }
+        .module-list { list-style: none; }
+        .module-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 1rem;
+            color: var(--text-muted); font-size: 0.95rem;
+        }
+        .module-list li .check {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: rgba(52,211,153,0.1);
+            color: var(--accent3); display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; flex-shrink: 0;
+        }
+        .module-visual {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .vis-row {
+            display: flex; gap: 1rem;
+        }
+        .vis-item {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 1rem;
+            border-left: 3px solid var(--accent);
+        }
+        .vis-item span { display: block; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; }
+        .vis-item strong { font-size: 1.3rem; }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(56,189,248,0.3);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+        .pricing-card.popular {
+            border-color: var(--accent);
+            background: rgba(56,189,248,0.03);
+        }
+        .popular-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--gradient-1); color: white;
+            padding: 0.4rem 1.2rem; border-radius: 100px;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+        }
+        .pricing-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .pricing-card .price {
+            font-size: 2.5rem; font-weight: 800; margin: 1.5rem 0;
+        }
+        .pricing-card .price span {
+            font-size: 1rem; font-weight: 400; color: var(--text-muted);
+        }
+        .pricing-card ul { list-style: none; margin-bottom: 2rem; }
+        .pricing-card ul li {
+            padding: 0.6rem 0; color: var(--text-muted); font-size: 0.9rem;
+            display: flex; align-items: center; gap: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .pricing-card ul li::before { content: '✓'; color: var(--accent3); font-weight: 700; }
+        .pricing-card ul li.missing { opacity: 0.4; }
+        .pricing-card ul li.missing::before { content: '—'; color: var(--text-muted); }
+        .pricing-card .btn { width: 100%; justify-content: center; }
+
+        /* Security / Trust */
+        .trust-section { background: rgba(255,255,255,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .trust-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+        }
+        .trust-item {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 2rem; text-align: center;
+            transition: all 0.3s;
+        }
+        .trust-item:hover { border-color: rgba(56,189,248,0.2); }
+        .trust-item .icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin: 0 auto 1.5rem;
+        }
+        .trust-item h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+        .trust-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(56,189,248,0.08) 0%, transparent 60%);
+        }
+        .cta-section h2 { font-size: 2.5rem; margin-bottom: 1rem; position: relative; }
+        .cta-section p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2.5rem; position: relative; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 4rem 5% 2rem;
+            background: rgba(255,255,255,0.02);
+        }
+        .footer-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem; margin-bottom: 3rem;
+        }
+        .footer-brand p { color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; line-height: 1.6; }
+        .footer-col h4 { font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.75rem; }
+        .footer-col ul li a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--accent); }
+        .footer-bottom {
+            max-width: 1200px; margin: 0 auto;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero-buttons { justify-content: center; }
+            .hero-visual { order: -1; margin-bottom: 2rem; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .trust-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu { display: block; }
+            .hero h1 { font-size: 2.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: 1fr; }
+            .module-detail { grid-template-columns: 1fr; }
+            .trust-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .floating-card { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">
+            <div class="logo-icon">L</div>
+            LUMERA
+        </div>
+        <ul class="nav-links">
+            <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+            <li><a href="#modules">Modules</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#securite">Sécurité</a></li>
+            <li><a href="#contact" class="btn btn-primary">Demander une démo</a></li>
+        </ul>
+        <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="hero-bg"></div>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>🚀</span> Version 7.0 — Nouveau tableau de bord
+                </div>
+                <h1>La gestion clinique <br><span>enfin unifiée.</span></h1>
+                <p>LUMERA centralise le parcours patient, les opérations internes, les flux financiers et les indicateurs de pilotage dans une seule plateforme moderne et intuitive.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary btn-large">Demander une démonstration</a>
+                    <a href="#modules" class="btn btn-outline btn-large">Explorer les modules</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="dashboard-mockup">
+                    <div class="mockup-header">
+                        <div class="dot dot-red"></div>
+                        <div class="dot dot-yellow"></div>
+                        <div class="dot dot-green"></div>
+                        <span style="margin-left:auto;font-size:0.75rem;color:var(--text-muted)">Tableau de Bord Principal</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="mockup-row">
+                            <div class="mockup-card accent">
+                                <div class="val">0</div>
+                                <div class="lbl">Patients en attente</div>
+                            </div>
+                            <div class="mockup-card accent2">
+                                <div class="val">0</div>
+                                <div class="lbl">Consultations</div>
+                            </div>
+                        </div>
+                        <div class="mockup-row">
+                            <div class="mockup-card accent3">
+                                <div class="val">0</div>
+                                <div class="lbl">Explorations</div>
+                            </div>
+                            <div class="mockup-card accent4">
+                                <div class="val">535</div>
+                                <div class="lbl">Paiements en attente</div>
+                            </div>
+                        </div>
+                        <div class="mockup-chart">
+                            <div class="bar" style="height:40%"></div>
+                            <div class="bar" style="height:60%"></div>
+                            <div class="bar" style="height:85%"></div>
+                            <div class="bar" style="height:45%"></div>
+                            <div class="bar" style="height:70%"></div>
+                            <div class="bar" style="height:55%"></div>
+                            <div class="bar" style="height:90%"></div>
+                            <div class="bar" style="height:65%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-card floating-card-1">
+                    <div style="font-size:0.8rem;color:var(--text-muted)">Chiffre d'affaires</div>
+                    <div style="font-size:1.3rem;font-weight:700;color:var(--accent3)">+24%</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted)">vs mois précédent</div>
+                </div>
+                <div class="floating-card floating-card-2">
+                    <div style="font-size:0.8rem;color:var(--text-muted)">Créances</div>
+                    <div style="font-size:1.3rem;font-weight:700;color:var(--accent4)">12 450 DA</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted)">Reste à recouvrer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>6+</h3>
+                <p>Modules intégrés</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Parcours patient couvert</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Accessibilité cloud</p>
+            </div>
+            <div class="stat-item">
+                <h3>&lt;2h</h3>
+                <p>Formation par profil</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Overview -->
+    <section id="fonctionnalites">
+        <div class="section-header">
+            <div class="section-label">Fonctionnalités</div>
+            <h2>Tout ce qu'une clinique moderne <br>doit avoir en un seul outil</h2>
+            <p>De l'accueil du patient jusqu'à la facturation, en passant par le pilotage financier et la gestion des stocks.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Gestion Médicale Complète</h3>
+                <p>Dossier patient, consultations, hospitalisation, bloc opératoire, examens et imagerie.</p>
+                <ul>
+                    <li>Dossier médical structuré</li>
+                    <li>Préconsultation & constantes</li>
+                    <li>Ordonnances & prescriptions</li>
+                    <li>Agenda intégré</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Facturation & Trésorerie</h3>
+                <p>Caisse, encaissements, assurances, créances et restes à payer en temps réel.</p>
+                <ul>
+                    <li>Facturation des actes</li>
+                    <li>Suivi des paiements</li>
+                    <li>Gestion des assurances</li>
+                    <li>Clôtures de caisse</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Pharmacie & Logistique</h3>
+                <p>Stock, inventaire, achats et fournisseurs intégrés au parcours patient.</p>
+                <ul>
+                    <li>Alertes de rupture</li>
+                    <li>Traçabilité des mouvements</li>
+                    <li>Commandes fournisseurs</li>
+                    <li>Valorisation du stock</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Tableaux de Bord & KPI</h3>
+                <p>Vision immédiate de l'activité, de la rentabilité et des points de vigilance.</p>
+                <ul>
+                    <li>CA journalier/mensuel</li>
+                    <li>Indicateurs médicaux</li>
+                    <li>Occupation des chambres</li>
+                    <li>Exports PDF & Excel</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🩺</div>
+                <h3>Honoraires Médecins</h3>
+                <p>Calcul automatique et paramétrable des honoraires par acte, médecin et règle de répartition.</p>
+                <ul>
+                    <li>Paramétrage par acte</li>
+                    <li>Calcul automatique</li>
+                    <li>Historique & ajustements</li>
+                    <li>Net à payer</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Sécurité & Conformité</h3>
+                <p>Profils utilisateurs, droits d'accès, journal d'audit et traçabilité complète.</p>
+                <ul>
+                    <li>Profils par service</li>
+                    <li>Journal d'audit</li>
+                    <li>Traçabilité des actions</li>
+                    <li>Confidentialité renforcée</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Detail -->
+    <section class="modules-section" id="modules">
+        <div>
+            <div class="section-header">
+                <div class="section-label">Modules</div>
+                <h2>Une architecture complète pour <br>chaque besoin de votre clinique</h2>
+                <p>Explorez les 4 piliers de LUMERA et découvrez comment chaque module transforme votre quotidien.</p>
+            </div>
+
+            <div class="modules-tabs">
+                <button class="tab-btn active" onclick="switchTab('medical')">Médical</button>
+                <button class="tab-btn" onclick="switchTab('admin')">Administratif</button>
+                <button class="tab-btn" onclick="switchTab('logistique')">Logistique</button>
+                <button class="tab-btn" onclick="switchTab('pilotage')">Pilotage</button>
+            </div>
+
+            <div id="medical" class="tab-content active">
+                <div class="module-detail">
+                    <div>
+                        <h3>Gestion Médicale</h3>
+                        <p>Suivez le patient de l'accueil à la sortie, avec un dossier médical complet, des consultations structurées et un agenda centralisé.</p>
+                        <ul class="module-list">
+                            <li><span class="check">✓</span> Patients : création, recherche, fiche synthèse</li>
+                            <li><span class="check">✓</span> Dossier médical : antécédents, observations, diagnostics</li>
+                            <li><span class="check">✓</span> Préconsultation : constantes, motif, orientation</li>
+                            <li><span class="check">✓</span> Consultation : saisie structurée, prescriptions, CR</li>
+                            <li><span class="check">✓</span> Hospitalisation : admission, séjour, sortie, synthèse</li>
+                            <li><span class="check">✓</span> Bloc opératoire : planification, actes, traçabilité</li>
+                            <li><span class="check">✓</span> Examens & imagerie : demandes, résultats, documents</li>
+                            <li><span class="check">✓</span> Agenda : rendez-vous par praticien ou service</li>
+                        </ul>
+                    </div>
+                    <div class="module-visual">
+                        <div class="vis-row">
+                            <div class="vis-item"><span>Patients aujourd'hui</span><strong>42</strong></div>
+                            <div class="vis-item" style="border-left-color:var(--accent3)"><span>Consultations</span><strong>28</strong></div>
+                        </div>
+                        <div class="vis-row">
+                            <div class="vis-item" style="border-left-color:var(--accent4)"><span>Hospitalisations</span><strong>8</strong></div>
+                            <div class="vis-item" style="border-left-color:var(--accent2)"><span>Opérations</span><strong>3</strong></div>
+                        </div>
+                        <div style="margin-top:1rem; background:rgba(255,255,255,0.02); border-radius:10px; padding:1rem; border:1px solid var(--border);">
+                            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Activité de la semaine</div>
+                            <div class="mockup-chart" style="height:80px; border:none; padding:0; gap:4px;">
+                                <div class="bar" style="height:50%; border-radius:3px;"></div>
+                                <div class="bar" style="height:70%; border-radius:3px; background:var(--gradient-2);"></div>
+                                <div class="bar" style="height:90%; border-radius:3px; background:var(--gradient-3);"></div>
+                                <div class="bar" style="height:60%; border-radius:3px; background:var(--gradient-2);"></div>
+                                <div class="bar" style="height:80%; border-radius:3px;"></div>
+                                <div class="bar" style="height:95%; border-radius:3px; background:var(--gradient-3);"></div>
+                                <div class="bar" style="height:75%; border-radius:3px; background:var(--gradient-2);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="admin" class="tab-content">
+                <div class="module-detail">
+                    <div>
+                        <h3>Gestion Administrative</h3>
+                        <p>Automatisez la facturation, maîtrisez la caisse, gérez les assurances et sécurisez l'accès aux données avec des profils utilisateurs et un journal d'audit.</p>
+                        <ul class="module-list">
+                            <li><span class="check">✓</span> Facturation des prestations, actes et consultations</li>
+                            <li><span class="check">✓</span> Caisse & encaissements avec suivi des reçus</li>
+                            <li><span class="check">✓</span> Gestion des assurances, prises en charge et créances</li>
+                            <li><span class="check">✓</span> Utilisateurs, rôles et droits d'accès par profil</li>
+                            <li><span class="check">✓</span> Journal d'audit pour tracer les actions sensibles</li>
+                            <li><span class="check">✓</span> Codes-barres et impressions intégrés</li>
+                        </ul>
+                    </div>
+                    <div class="module-visual">
+                        <div class="vis-row">
+                            <div class="vis-item" style="border-left-color:var(--accent3)"><span>Encaissements</span><strong>+18%</strong></div>
+                            <div class="vis-item"><span>Factures</span><strong>156</strong></div>
+                        </div>
+                        <div class="vis-row">
+                            <div class="vis-item" style="border-left-color:var(--accent4)"><span>Créances</span><strong>45 200 DA</strong></div>
+                            <div class="vis-item" style="border-left-color:var(--accent2)"><span>Assurances</span><strong>32</strong></div>
+                        </div>
+                        <div style="margin-top:1rem; background:rgba(255,255,255,0.02); border-radius:10px; padding:1rem; border:1px solid var(--border); font-size:0.85rem;">
+                            <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+                                <span style="color:var(--text-muted)">Caisse du jour</span>
+                                <strong style="color:var(--accent3)">320 500 DA</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; padding:0.5rem 0;">
+                                <span style="color:var(--text-muted)">Reste à recouvrer</span>
+                                <strong style="color:var(--accent4)">78 300 DA</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="logistique" class="tab-content">
+                <div class="module-detail">
+                    <div>
+                        <h3>Gestion Logistique</h3>
+                        <p>Maîtrisez votre pharmacie, votre stock, vos achats et vos fournisseurs dans un environnement connecté aux prestations médicales.</p>
+                        <ul class="module-list">
+                            <li><span class="check">✓</span> Pharmacie interne : disponibilité et mouvements</li>
+                            <li><span class="check">✓</span> Stock : entrées, sorties, alertes, valorisation</li>
+                            <li><span class="check">✓</span> Achats : demandes, commandes, réception</li>
+                            <li><span class="check">✓</span> Inventaire : contrôles périodiques et écarts</li>
+                            <li><span class="check">✓</span> Fournisseurs : fiches, commandes, historique</li>
+                            <li><span class="check">✓</span> Rapprochement avec les prestations réalisées</li>
+                        </ul>
+                    </div>
+                    <div class="module-visual">
+                        <div class="vis-row">
+                            <div class="vis-item" style="border-left-color:var(--accent3)"><span>Produits en stock</span><strong>1 240</strong></div>
+                            <div class="vis-item" style="border-left-color:var(--accent4)"><span>Alertes</span><strong>12</strong></div>
+                        </div>
+                        <div class="vis-row">
+                            <div class="vis-item"><span>Valeur stock</span><strong>2.4M DA</strong></div>
+                            <div class="vis-item" style="border-left-color:var(--accent2)"><span>Commandes</span><strong>5</strong></div>
+                        </div>
+                        <div style="margin-top:1rem; background:rgba(255,255,255,0.02); border-radius:10px; padding:1rem; border:1px solid var(--border);">
+                            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Répartition par catégorie</div>
+                            <div style="display:flex; height:20px; border-radius:10px; overflow:hidden; background:var(--border);">
+                                <div style="width:45%; background:var(--gradient-1);"></div>
+                                <div style="width:30%; background:var(--gradient-2);"></div>
+                                <div style="width:25%; background:var(--gradient-3);"></div>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top:0.5rem; font-size:0.75rem;">
+                                <span style="color:var(--accent)">● Médicaments</span>
+                                <span style="color:var(--accent3)">● Consommables</span>
+                                <span style="color:var(--accent4)">● Matériel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pilotage" class="tab-content">
+                <div class="module-detail">
+                    <div>
+                        <h3>Pilotage & Décision</h3>
+                        <p>Transformez vos données quotidiennes en indicateurs exploitables pour piloter l'établissement avec précision et anticipation.</p>
+                        <ul class="module-list">
+                            <li><span class="check">✓</span> Tableau de bord exécutif temps réel</li>
+                            <li><span class="check">✓</span> CA, encaissements, dépenses, rentabilité</li>
+                            <li><span class="check">✓</span> Fiches synthèse médecin : activité & honoraires</li>
+                            <li><span class="check">✓</span> Statistiques médicales & analyses comparatives</li>
+                            <li><span class="check">✓</span> Rapports exportables PDF & Excel</li>
+                            <li><span class="check">✓</span> Analyse avancée : rentabilité par acte, spécialité, service</li>
+                        </ul>
+                    </div>
+                    <div class="module-visual">
+                        <div class="vis-row">
+                            <div class="vis-item" style="border-left-color:var(--accent3)"><span>CA Mensuel</span><strong>8.2M DA</strong></div>
+                            <div class="vis-item"><span>Bénéfice</span><strong>2.1M DA</strong></div>
+                        </div>
+                        <div class="vis-row">
+                            <div class="vis-item" style="border-left-color:var(--accent4)"><span>Taux occupation</span><strong>78%</strong></div>
+                            <div class="vis-item" style="border-left-color:var(--accent2)"><span>Top acte</span><strong>Consultation</strong></div>
+                        </div>
+                        <div style="margin-top:1rem; background:rgba(255,255,255,0.02); border-radius:10px; padding:1rem; border:1px solid var(--border);">
+                            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Évolution du CA (6 mois)</div>
+                            <div style="display:flex; align-items:flex-end; height:70px; gap:6px;">
+                                <div style="flex:1; background:var(--gradient-1); border-radius:4px 4px 0 0; height:40%;"></div>
+                                <div style="flex:1; background:var(--gradient-1); border-radius:4px 4px 0 0; height:55%;"></div>
+                                <div style="flex:1; background:var(--gradient-1); border-radius:4px 4px 0 0; height:50%;"></div>
+                                <div style="flex:1; background:var(--gradient-2); border-radius:4px 4px 0 0; height:70%;"></div>
+                                <div style="flex:1; background:var(--gradient-2); border-radius:4px 4px 0 0; height:85%;"></div>
+                                <div style="flex:1; background:var(--gradient-3); border-radius:4px 4px 0 0; height:95%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="tarifs">
+        <div class="section-header">
+            <div class="section-label">Tarifs</div>
+            <h2>Des formules adaptées à <br>votre taille et vos besoins</h2>
+            <p>Choisissez la formule qui correspond à votre clinique et évoluez vers des modules avancés quand vous êtes prêt.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Essentiel</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;">Pour les petites structures souhaitant démarrer leur digitalisation.</p>
+                <div class="price">Sur devis<span></span></div>
+                <ul>
+                    <li>Patients & consultations</li>
+                    <li>Agenda intégré</li>
+                    <li>Facturation & caisse</li>
+                    <li>Impressions & codes-barres</li>
+                    <li class="missing">Assurances avancées</li>
+                    <li class="missing">Pharmacie & stock</li>
+                    <li class="missing">Tableaux de bord</li>
+                    <li class="missing">Hospitalisation & bloc</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline">Nous contacter</a>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-badge">Recommandé</div>
+                <h3>Professionnel</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;">Pour les cliniques actives cherchant à centraliser leur gestion.</p>
+                <div class="price">Sur devis<span></span></div>
+                <ul>
+                    <li>Tout Essentiel inclus</li>
+                    <li>Gestion des assurances</li>
+                    <li>Pharmacie & stock</li>
+                    <li>États financiers & exports</li>
+                    <li>Rapports PDF & Excel</li>
+                    <li class="missing">Hospitalisation & bloc</li>
+                    <li class="missing">Honoraires médecins</li>
+                    <li class="missing">KPI avancés</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Nous contacter</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Entreprise</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;">Pour les cliniques privées exigeantes avec un pilotage avancé.</p>
+                <div class="price">Sur devis<span></span></div>
+                <ul>
+                    <li>Tout Professionnel inclus</li>
+                    <li>Hospitalisation & bloc opératoire</li>
+                    <li>Honoraires médecins automatiques</li>
+                    <li>Tableaux de bord avancés</li>
+                    <li>KPI & analyses comparatives</li>
+                    <li>Fiches synthèse médecin</li>
+                    <li>Support dédié</li>
+                    <li>Évolutions prioritaires</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline">Nous contacter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust / Security -->
+    <section class="trust-section" id="securite">
+        <div class="section-header">
+            <div class="section-label">Confiance</div>
+            <h2>La sécurité et la conformité <br>au cœur de votre gestion</h2>
+            <p>LUMERA intègre des mécanismes de contrôle, de traçabilité et de confidentialité pour protéger vos données et vos patients.</p>
+        </div>
+        <div class="trust-grid">
+            <div class="trust-item">
+                <div class="icon">👥</div>
+                <h4>Profils & Droits</h4>
+                <p>Accès personnalisés par service : accueil, médecin, pharmacie, caisse, administration, direction.</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon" style="background:rgba(52,211,153,0.1); border-color:rgba(52,211,153,0.2)">📋</div>
+                <h4>Journal d'Audit</h4>
+                <p>Traçabilité complète des actions sensibles : création, modification, suppression, paiement, validation.</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon" style="background:rgba(244,114,182,0.1); border-color:rgba(244,114,182,0.2)">💾</div>
+                <h4>Sauvegarde & Restauration</h4>
+                <p>Politique de sauvegarde formalisée et procédures de restauration selon votre environnement.</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon" style="background:rgba(129,140,248,0.1); border-color:rgba(129,140,248,0.2)">🔐</div>
+                <h4>Confidentialité</h4>
+                <p>Procédures internes de gestion des comptes, mots de passe et habilitations conformes aux exigences.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <h2>Prêt à moderniser <br>la gestion de votre clinique ?</h2>
+        <p>Planifiez une démonstration personnalisée et découvrez comment LUMERA peut transformer votre établissement dès les premiers jours.</p>
+        <div class="hero-buttons" style="justify-content:center;">
+            <a href="mailto:contact@lumera.com" class="btn btn-primary btn-large">Demander une démo</a>
+            <a href="#" class="btn btn-outline btn-large" onclick="alert('Téléchargement de la brochure commerciale (à configurer)'); return false;">Télécharger la brochure</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="font-size:1.3rem;">
+                    <div class="logo-icon" style="width:28px;height:28px;font-size:0.85rem;">L</div>
+                    LUMERA
+                </div>
+                <p>Plateforme intégrée de gestion clinique. Du parcours patient au pilotage financier, une solution complète pour cliniques et établissements de santé.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Produit</h4>
+                <ul>
+                    <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                    <li><a href="#modules">Modules</a></li>
+                    <li><a href="#tarifs">Tarifs</a></li>
+                    <li><a href="#">Mises à jour</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Ressources</h4>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Guide de démarrage</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:contact@lumera.com">contact@lumera.com</a></li>
+                    <li><a href="#">Demander une démo</a></li>
+                    <li><a href="#">Devenir partenaire</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 LUMERA. Tous droits réservés. | Version 7.0</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(11,15,25,0.95)';
+            } else {
+                nav.style.background = 'rgba(11,15,25,0.8)';
+            }
+        });
+
+        // Mobile menu
+        function toggleMenu() {
+            const links = document.querySelector('.nav-links');
+            if (links.style.display === 'flex') {
+                links.style.display = 'none';
+            } else {
+                links.style.display = 'flex';
+                links.style.flexDirection = 'column';
+                links.style.position = 'absolute';
+                links.style.top = '60px';
+                links.style.left = '0';
+                links.style.right = '0';
+                links.style.background = 'rgba(11,15,25,0.98)';
+                links.style.padding = '2rem';
+                links.style.borderBottom = '1px solid var(--border)';
+            }
+        }
+
+        // Intersection observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card, .pricing-card, .trust-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
